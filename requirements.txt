@@ -1,1 +1,9 @@
-
+# Dependências mínimas — fixem as versões para reprodutibilidade
+ollama == 0.6.2
+python-dotenv == 1.2.2
+prompt-toolkit == 3.0.52
+pyfiglet == 1.0.4
+# Opcional, dependendo do que vocês implementarem:
+rich == 15.0.0 #(terminal bonito)
+# pandas =2.2.3 (manipulação de dados)
+# matplotlib =3.9.2 (gráficos)
