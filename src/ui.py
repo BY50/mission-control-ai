@@ -18,4 +18,34 @@ def show_banner():
     "Modelo: gpt-oss:120b via Ollama Cloud",
     title="◆ MISSION CONTROL", border_style="#06B6D4"
   ))
-
+def show_response(text):
+  """Renderiza resposta da IA em painel com timestamp."""
+  now = datetime.now().strftime("%H:%M")
+  console.print(Panel(text, title="◆ Mission Control",
+    subtitle=now, border_style="#06B6D4"))
+def run_cli(engine):
+  """Loop principal da CLI."""
+  show_banner()
+  if not engine.is_ready():
+    console.print(" ⚠ Engine status: AGUARDANDO IMPLEMENTAÇÃO ✗\n",
+      style="yellow")
+  while True:
+    try:
+      user_input = session.prompt("❯ ").strip()
+    except (KeyboardInterrupt, EOFError):
+      break
+    if not user_input:
+      continue
+    if user_input = "/exit":
+      break
+    if user_input = "/help":
+      console.print("Comandos: /help /status /about /clear /exit")
+      continue
+    if user_input = "/status":
+      show_response(engine.status_snapshot())
+      continue
+    if user_input = "/clear":
+      console.clear(); show_banner(); continue
+    # Qualquer outra entrada vai para o motor de análise
+    resposta = engine.analyze(user_input)
+    show_response(resposta)
