@@ -38,11 +38,11 @@ class MissionEngine:
     self.system_prompt = load_system_prompt()
   def is_ready(self):
     # Troquem para True quando analyze() estiver implementado
-    return False
+    return True
   def status_snapshot(self):
     """Retorna texto resumindo o estado atual da telemetria."""
     # TODO: chamar telemetria.coletar() e formatar legivelmente
-    d = telemetria.coletar()
+    d = src.telemetria.coletar()
     status = f"A temperatura monitorada é {d[0]}°C, A quantidade de hectares destruidos é {d[1]} hectares 
         e a energia restante é {d[2]}%."
     return status
@@ -54,12 +54,11 @@ class MissionEngine:
     # 3. Montar prompt com dados + alertas + pergunta
     # 4. Chamar llm(prompt, system=self.system_prompt)
     # 5. Retornar a resposta
-    return (
-      "🛠️ Implementação pendente.\n\n"
-      "Olá! A interface CLI está funcionando, mas a lógica\n"
-      "de análise ainda não foi conectada. O grupo precisa:\n\n"    
-      " 1. Completar src/telemetria.py\n"
-      " 2. Completar src/alertas.py\n"
-      " 3. Escrever o system prompt em prompts/system_prompt.md\n"
-      " 4. Sobrescrever analyze() em src/engine.py"
-    )
+    dados = src.telemetria.coletar()
+    avaliacoes = src.alertas.avaliar(dados)
+    prompt = f"A temperatura monitorada pelo seu satélite da parte da floresta monitorada é {dados[0]} 
+    e a avaliação disso é {avaliacoes[0]}. O valor da área desmatada medido pelo seu satélite da parte da floresta monitorada é {dados[1]} 
+    e a avaliação disso é {avaliacoes[1]}. 
+    Baseado nesses dados e avaliações, responda essa pergunta: {pergunta_usuario}"
+    resposta = llm(prompt, system=self.system_prompt)
+    return resposta
