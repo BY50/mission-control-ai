@@ -42,7 +42,10 @@ class MissionEngine:
   def status_snapshot(self):
     """Retorna texto resumindo o estado atual da telemetria."""
     # TODO: chamar telemetria.coletar() e formatar legivelmente
-    return "🛠️ status_snapshot() ainda não implementado."
+    d = telemetria.coletar()
+    status = f"A temperatura monitorada é {d[0]}°C, A quantidade de hectares destruidos é {d[1]} hectares 
+        e a energia restante é {d[2]}%."
+    return status
   def analyze(self, pergunta_usuario):
     """Analisa a pergunta com base na telemetria + alertas + IA."""
     # TODO (foco do trabalho):
